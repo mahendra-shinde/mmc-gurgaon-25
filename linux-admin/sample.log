@@ -1,0 +1,30 @@
+2025-07-25 09:15:23 INFO User login successful: john.smith@company.com
+2025-07-25 09:16:45 ERROR Database connection failed: timeout after 30 seconds
+2025-07-25 09:17:12 INFO User registration: sarah.johnson@company.com
+2025-07-25 09:18:33 WARN High memory usage detected: 85%
+2025-07-25 09:19:44 INFO File upload completed: document.pdf (2.5MB)
+2025-07-25 09:20:15 ERROR Authentication failed for user: hacker@malicious.com
+2025-07-25 09:21:28 INFO Backup process started
+2025-07-25 09:22:39 WARN Disk space low on /var partition: 92% used
+2025-07-25 09:23:51 INFO User logout: john.smith@company.com
+2025-07-25 09:24:12 ERROR Payment processing failed: invalid credit card
+2025-07-25 09:25:33 INFO Email sent to: customer@example.com
+2025-07-25 09:26:44 FATAL System crash detected - initiating recovery
+2025-07-25 09:27:55 INFO Recovery completed successfully
+2025-07-25 09:28:16 INFO User login successful: mike.chen@company.com
+2025-07-25 09:29:27 WARN API rate limit exceeded for IP: 192.168.1.100
+2025-07-25 09:30:38 INFO Data synchronization completed
+2025-07-25 09:31:49 ERROR Network timeout: unable to reach external service
+2025-07-25 09:32:10 INFO User profile updated: lisa.wang@company.com
+2025-07-25 09:33:21 WARN SSL certificate expires in 7 days
+2025-07-25 09:34:32 INFO Scheduled maintenance completed
+2025-07-25 09:35:43 ERROR Database query failed: syntax error in SQL
+2025-07-25 09:36:54 INFO File download initiated: report.xlsx
+2025-07-25 09:37:15 WARN Cache memory usage high: 78%
+2025-07-25 09:38:26 INFO User registration: david.brown@company.com
+2025-07-25 09:39:37 ERROR Session expired for user: expired.user@company.com
+2025-07-25 09:40:48 INFO Backup verification successful
+2025-07-25 09:41:59 WARN Temperature alert: server room at 28°C
+2025-07-25 09:42:10 INFO Load balancer health check passed
+2025-07-25 09:43:21 ERROR File corruption detected: config.xml
+2025-07-25 09:44:32 INFO User login successful: emma.davis@company.com

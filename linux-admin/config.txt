@@ -1,0 +1,50 @@
+# Web Server Configuration
+# This is a sample configuration file
+
+# Server Settings
+server_name=example.com
+port=80
+# ssl_port=443
+document_root=/var/www/html
+
+# Database Configuration
+db_host=localhost
+db_port=3306
+db_name=webapp
+# db_backup_host=backup.example.com
+db_timeout=30
+
+# Cache Settings
+cache_enabled=true
+cache_ttl=3600
+# cache_redis_host=redis.example.com
+cache_max_size=1GB
+
+# Security Settings
+enable_firewall=true
+max_login_attempts=5
+session_timeout=1800
+# debug_mode=false
+
+# Performance Tuning
+max_connections=1000
+worker_processes=4
+keepalive_timeout=65
+
+# Logging Configuration
+log_level=INFO
+log_file=/var/log/webapp.log
+# access_log=/var/log/access.log
+error_log=/var/log/error.log
+
+# Email Settings
+smtp_server=mail.example.com
+smtp_port=587
+# smtp_user=noreply@example.com
+# smtp_password=secret123
+
+# Backup Configuration
+backup_enabled=true
+backup_schedule=daily
+backup_retention=30
+backup_path=/backups/webapp
