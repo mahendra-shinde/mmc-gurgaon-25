@@ -1,0 +1,13 @@
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+  client:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - web
+# docker run -d -p 8080:80 nginx:latest
+# docker run -d -p 8081:80 mysql-client:latest   

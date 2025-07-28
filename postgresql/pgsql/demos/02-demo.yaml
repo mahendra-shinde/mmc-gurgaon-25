@@ -1,0 +1,11 @@
+projects:
+- name: Project Alpha
+  description: A sample project
+  version: 1.0
+- name: Project Beta
+  description: Another sample project
+  version: 2.0
+
+# projects[0].name = Project Alpha
+# projects[1].version = 2.0
+

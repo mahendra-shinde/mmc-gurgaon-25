@@ -1,0 +1,17 @@
+# This is comment
+# String type values (key/value pair)
+name: PostgreSQL Demo
+# Integer type values
+version: 1
+# Boolean type values
+enabled: true
+# List type values
+features:
+- replication     # features[0]
+- partitioning    # features[1]
+- indexing        # features[2]
+# Dictionary type values
+settings: 
+  max_connections: 100     # settings['max_connections'] or settings.max_connections
+  shared_buffers: "256MB"  # settings['shared_buffers'] or settings.shared_buffers
+  work_mem: "4MB"          # settings['work_mem'] or settings.work_mem
