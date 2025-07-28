@@ -1,0 +1,43 @@
+# Docker Compose file to set up a PostgreSQL database and pgAdmin web UI.
+# - postgres: The main PostgreSQL database service.
+# - pgadmin: Web-based administration tool for PostgreSQL.
+# - postgres_data: Named volume to persist database data.
+# - postgres_network: Custom network for inter-service communication.
+
+services:
+  postgres:
+    # PostgreSQL database service
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin           # Database username
+      POSTGRES_PASSWORD: admin123    # Database password
+      POSTGRES_DB: mydatabase        # Default database name
+    volumes:
+    - postgres_data:/var/lib/postgresql/data  # Persist database data
+    ports:
+    - "5432:5432"                    # Expose PostgreSQL port
+    networks:
+    - postgres_network               # Connect to custom network
+  
+  pgadmin:
+    # pgAdmin web UI for managing PostgreSQL
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com   # pgAdmin login email
+      PGADMIN_DEFAULT_PASSWORD: admin123       # pgAdmin login password
+    ports:
+    - "8080:80"                     # Expose pgAdmin web interface
+    depends_on:
+    - postgres                      # Wait for postgres service
+    networks:
+    - postgres_network              # Connect to custom network
+
+volumes:
+  postgres_data:  # Named volume for PostgreSQL data
+
+networks:
+  postgres_network:  # Custom bridge network for services
+
+
