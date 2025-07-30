@@ -89,3 +89,114 @@ INSERT INTO transactions (account_id, amount, transaction_type, transaction_date
 (3, 700.00, 'credit', '2024-07-05 14:00:00');
 
 ```
+
+## Backup the database
+
+To backup the entire `xyz_bank` database using the PostgreSQL command-line utility, follow these steps:
+
+### 1. Open Terminal or Command Prompt
+
+Ensure you have access to the machine where PostgreSQL is installed.
+
+### 2. Run the `pg_dump` Command
+
+Use the following command to create a backup file (`xyz_bank_backup.sql`):
+
+```sh
+pg_dump -U <username> -h <host> -p <port> -F p -d xyz_bank -f xyz_bank_backup.sql
+```
+
+- Replace `<username>` with your PostgreSQL username.
+- Replace `<host>` with the database server address (use `localhost` if running locally).
+- Replace `<port>` with the PostgreSQL port (default is `5432`).
+
+**Example:**
+
+```sh
+pg_dump -U postgres -h localhost -p 5432 -F p -d xyz_bank -f xyz_bank_backup.sql
+```
+
+### 3. Enter Password
+
+When prompted, enter your PostgreSQL password.
+
+### 4. Verify the Backup
+
+Check that `xyz_bank_backup.sql` has been created in your current directory.
+
+**Note:**  
+- The `-F p` option specifies a plain SQL script output.
+- You can use other formats (`-F c` for custom, `-F t` for tar) as needed.
+- For a full cluster backup (all databases), use `pg_dumpall`.
+
+## Backup the database as a TAR archive
+
+To backup the entire `xyz_bank` database as a TAR archive, use the following command:
+
+> DO NOT run this command inside `psql`. Run this command in Linux Shell directly.
+
+```sh
+pg_dump -U <username> -h <host> -p <port> -F t -d xyz_bank -f xyz_bank_backup
+```
+
+- Replace `<username>` with your PostgreSQL username.
+- Replace `<host>` with the database server address (use `localhost` if running locally).
+- Replace `<port>` with the PostgreSQL port (default is `5432`).
+
+**Example:**
+
+```sh
+pg_dump -U postgres -h localhost -p 5432 -F t -d xyz_bank -f xyz_bank_backup
+```
+
+This will create a backup file named `xyz_bank_backup` in your current directory in TAR format, which is suitable for restoring with `pg_restore`.
+---
+
+## Restore the TAR Backup to a New Database
+
+To restore the TAR archive backup (`xyz_bank_backup`) into a new database (e.g., `xyz_bank2`), follow these steps:
+
+### 1. Create the New Database
+
+First, create the new database using `create database` in psql:
+
+```sh
+sudo -u postgres pgsql
+create database xyz_bank2;
+\l              # list all databases, once list is printed on screen press 'q' to quit
+\q              # Quit the PSQL client
+```
+
+### 2. Restore the Backup Using `pg_restore`
+
+Run the following command to restore the TAR archive into `xyz_bank2`:
+
+> DO NOT run this command inside `psql`. Run this command in Linux Shell directly.
+
+```sh
+pg_restore -U <username> -h <host> -p <port> -d xyz_bank2 -F t xyz_bank_backup
+```
+
+- Replace `<username>`, `<host>`, and `<port>` as appropriate.
+- `xyz_bank_backup` is the TAR file created earlier.
+
+**Example:**
+
+```sh
+pg_restore -U postgres -h localhost -p 5432 -d xyz_bank2 -F t xyz_bank_backup
+```
+
+This will restore all tables and data from the TAR archive into the new `xyz_bank2` database.
+
+> Note: Make sure you are in right directory / path. file "xyz_bank_backup" must be in present directory for `db_restore` command to work!
+
+
+### 3. Verify the restoration
+
+```sh
+sudo -u postgres psql xyz_bank2
+## List of Tables
+\dt
+## Quit PSQL
+\q
+```
