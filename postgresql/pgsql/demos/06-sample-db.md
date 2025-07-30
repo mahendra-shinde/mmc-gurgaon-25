@@ -24,7 +24,7 @@ CREATE TABLE customers (
 
 -- Accounts Table
 CREATE TABLE accounts (
-    account_id SERIAL PRIMARY KEY,
+    account_id NUMERIC PRIMARY KEY,
     customer_id INT REFERENCES customers(customer_id),
     account_type VARCHAR(20) NOT NULL,
     balance NUMERIC(15,2) NOT NULL,
@@ -71,12 +71,12 @@ INSERT INTO customers (first_name, last_name, email, phone, branch_id) VALUES
 
 ### Accounts (200 sample records)
 ```sql
-INSERT INTO accounts (customer_id, account_type, balance, opened_on) VALUES
-(1, 'savings', 15000.00, '2022-01-10'),
-(2, 'current', 25000.00, '2022-02-15'),
-(3, 'savings', 12000.00, '2022-03-20'),
-(4, 'current', 5000.00, '2022-04-25'),
-(5, 'savings', 30000.00, '2022-05-30')
+INSERT INTO accounts (account_id, customer_id, account_type, balance, opened_on) VALUES
+(1,1, 'savings', 15000.00, '2022-01-10'),
+(2,2, 'current', 25000.00, '2022-02-15'),
+(3,3, 'savings', 12000.00, '2022-03-20'),
+(4,4, 'current', 5000.00, '2022-04-25'),
+(5,5, 'savings', 30000.00, '2022-05-30');
 ```
 
 ### Transactions (500 sample records)
@@ -86,6 +86,6 @@ INSERT INTO transactions (account_id, amount, transaction_type, transaction_date
 (1, 200.00, 'debit', '2024-07-02 11:00:00'),
 (2, 1000.00, 'credit', '2024-07-03 12:00:00'),
 (2, 300.00, 'debit', '2024-07-04 13:00:00'),
-(3, 700.00, 'credit', '2024-07-05 14:00:00')
+(3, 700.00, 'credit', '2024-07-05 14:00:00');
 
 ```
