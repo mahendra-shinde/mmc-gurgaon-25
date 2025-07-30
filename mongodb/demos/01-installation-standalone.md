@@ -6,7 +6,12 @@ This guide explains how to install MongoDB 8.0 on Ubuntu and RHEL/CentOS Linux s
 ## For Ubuntu (22.04 or newer)
 
 1. Open a terminal on your Ubuntu machine.
-2. Download or copy the [install-ubuntu.sh](install-ubuntu.sh) script to your machine.
+2. Download the [install-ubuntu.sh](install-ubuntu.sh) script to your machine.
+
+    ```sh
+    wget -O install-ubuntu.sh https://raw.githubusercontent.com/mahendra-shinde/mmc-gurgaon-25/refs/heads/main/mongodb/demos/install-ubuntu.sh
+    ```
+
 3. Make the script executable:
    ```sh
    chmod +x install-ubuntu.sh
@@ -34,7 +39,10 @@ This guide explains how to install MongoDB 8.0 on Ubuntu and RHEL/CentOS Linux s
 ## For RHEL/CentOS (7 or newer)
 
 1. Open a terminal on your RHEL/CentOS machine.
-2. Download or copy the [install-rhel.sh](install-rhel.sh) script to your machine.
+2. Download the [install-rhel.sh](install-rhel.sh) script to your machine.
+   ```sh
+   curl -o install-rhel.sh https://raw.githubusercontent.com/mahendra-shinde/mmc-gurgaon-25/refs/heads/main/mongodb/demos/install-rhel.sh
+   ```
 3. Make the script executable:
    ```sh
    chmod +x install-rhel.sh
