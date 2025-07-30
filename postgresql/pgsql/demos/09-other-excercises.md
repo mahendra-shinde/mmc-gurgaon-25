@@ -1,11 +1,66 @@
-
 # XYZ Bank: SQL Exercises
 
-Below are some SQL exercises based on the XYZ Bank sample database schema. These cover basic SELECTs, JOINs, GROUP BY/ORDER BY, subtotals, and DML operations.
+Below are some SQL exercises based on the XYZ Bank sample database schema. These cover basic SELECTs, JOINs, GROUP BY/ORDER BY and DML operations.
+
+Below are two sections:
+- **Section 1:** Questions only (no answers)
+- **Section 2:** Questions with answers (SQL queries)
 
 ---
 
-## 1. Fetch Records
+## Section 1: Questions Only
+
+### 1. Fetch Records
+
+a. List all customers with their email and phone number.
+
+b. Show all accounts with a balance greater than 20,000.
+
+c. Fetch all transactions for account_id = 1, ordered by date (latest first).
+
+---
+
+### 2. Join Operations
+
+a. List all customers along with their branch name and city.
+
+b. Show all accounts with the customer name and account type.
+
+c. List all transactions with the account type and customer name.
+
+---
+
+### 3. Group and Order
+
+a. Find the total number of accounts per branch.
+
+b. Show the total balance per account type.
+
+c. List the top 5 customers with the highest account balances.
+
+---
+
+### 4. Subtotals (Aggregates)
+
+a. For each branch, show the total number of customers and the average account balance.
+
+b. For each customer, show the total credited and debited amount.
+
+---
+
+### 5. DML Operations
+
+a. Insert a new customer and a new account for them.
+
+b. Update the balance of account_id = 1 by adding 5000.
+
+c. Delete all transactions before 2024-01-01.
+
+---
+
+## Section 2: Questions with Answers
+
+### 1. Fetch Records
 
 **a.** List all customers with their email and phone number.
 ```sql
@@ -24,7 +79,7 @@ SELECT * FROM transactions WHERE account_id = 1 ORDER BY transaction_date DESC;
 
 ---
 
-## 2. Join Operations
+### 2. Join Operations
 
 **a.** List all customers along with their branch name and city.
 ```sql
@@ -50,7 +105,7 @@ JOIN customers c ON a.customer_id = c.customer_id;
 
 ---
 
-## 3. Group and Order
+### 3. Group and Order
 
 **a.** Find the total number of accounts per branch.
 ```sql
@@ -80,7 +135,7 @@ LIMIT 5;
 
 ---
 
-## 4. Subtotals (Aggregates)
+### 4. Subtotals (Aggregates)
 
 **a.** For each branch, show the total number of customers and the average account balance.
 ```sql
@@ -104,7 +159,7 @@ GROUP BY c.first_name, c.last_name;
 
 ---
 
-## 5. DML Operations
+### 5. DML Operations
 
 **a.** Insert a new customer and a new account for them.
 ```sql
