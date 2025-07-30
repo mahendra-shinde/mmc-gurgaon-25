@@ -15,12 +15,12 @@ Incremental backup in PostgreSQL is achieved by archiving WAL (Write-Ahead Log) 
 Edit `postgresql.conf`:
 ```conf
 archive_mode = on
-archive_command = 'cp %p /var/lib/pgsql/wal_archive/%f'
+archive_command = 'cp %p /var/lib/postgresql/16/wal_archive/%f'
 ```
 Create the archive directory:
 ```bash
-sudo mkdir -p /var/lib/pgsql/wal_archive
-sudo chown postgres:postgres /var/lib/pgsql/wal_archive
+sudo mkdir -p /var/lib/postgresql/16/wal_archive
+sudo chown postgres:postgres /var/lib/postgresql/16/wal_archive
 ```
 Reload PostgreSQL:
 ```bash
@@ -30,7 +30,7 @@ sudo systemctl reload postgresql
 #### 2.2. Take a Base Backup
 Use `pg_basebackup`:
 ```bash
-sudo -u postgres pg_basebackup -D /var/lib/pgsql/base_backup -Ft -z -P
+sudo -u postgres pg_basebackup -D /var/lib/postgresql/16/base_backup -Ft -z -P
 ```
 This creates a compressed base backup.
 
@@ -52,18 +52,18 @@ sudo systemctl stop postgresql
 
 #### 3.2. Restore the Base Backup
 ```bash
-sudo rm -rf /var/lib/pgsql/data/*
-sudo tar -xzf /var/lib/pgsql/base_backup/base.tar.gz -C /var/lib/pgsql/data/
+sudo rm -rf /var/lib/postgresql/16/main/*
+sudo tar -xzf /var/lib/postgresql/16/base_backup/base.tar.gz -C /var/lib/postgresql/16/main/
 ```
 
 #### 3.3. Create a recovery.signal File and recovery.conf Settings
 Create a `recovery.signal` file in the data directory (PostgreSQL 12+):
 ```bash
-sudo touch /var/lib/pgsql/data/recovery.signal
+sudo touch /var/lib/postgresql/16/main/recovery.signal
 ```
 Edit `postgresql.conf` to add:
 ```conf
-restore_command = 'cp /var/lib/pgsql/wal_archive/%f %p'
+restore_command = 'cp /var/lib/postgresql/16/wal_archive/%f %p'
 recovery_target_time = 'YYYY-MM-DD HH:MI:SS'
 ```
 Replace with your desired recovery timestamp.
@@ -96,7 +96,7 @@ PostgreSQL will replay WAL files up to the specified time and then exit recovery
   ```
 - List archived WAL files:
   ```bash
-  ls /var/lib/pgsql/wal_archive/
+ls /var/lib/postgresql/16/wal_archive/
   ```
 
 ---
