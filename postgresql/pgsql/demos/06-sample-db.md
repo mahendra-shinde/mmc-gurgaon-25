@@ -76,9 +76,7 @@ INSERT INTO accounts (customer_id, account_type, balance, opened_on) VALUES
 (2, 'current', 25000.00, '2022-02-15'),
 (3, 'savings', 12000.00, '2022-03-20'),
 (4, 'current', 5000.00, '2022-04-25'),
-(5, 'savings', 30000.00, '2022-05-30'),
--- ... (add 195 more records, distributing account types and balances, customer_id 1-100)
-(100, 'current', 8000.00, '2024-06-01');
+(5, 'savings', 30000.00, '2022-05-30')
 ```
 
 ### Transactions (500 sample records)
@@ -88,7 +86,6 @@ INSERT INTO transactions (account_id, amount, transaction_type, transaction_date
 (1, 200.00, 'debit', '2024-07-02 11:00:00'),
 (2, 1000.00, 'credit', '2024-07-03 12:00:00'),
 (2, 300.00, 'debit', '2024-07-04 13:00:00'),
-(3, 700.00, 'credit', '2024-07-05 14:00:00'),
--- ... (add 495 more records, varying account_id, amount, type, and date)
-(200, 150.00, 'debit', '2024-07-30 09:00:00');
+(3, 700.00, 'credit', '2024-07-05 14:00:00')
+
 ```
