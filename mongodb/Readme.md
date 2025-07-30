@@ -42,10 +42,10 @@ Below is a simple demonstration of basic MongoDB operations using the `mongo` sh
 
 ```shell
 # Start the MongoDB shell
-mongo
+$ mongosh
 
 # Create or switch to a database
-use mydb
+> use mydb
 
 # Insert a document into a collection
 > db.users.insertOne({ name: "Alice", age: 25, email: "alice@example.com" })
@@ -59,5 +59,9 @@ use mydb
 # Delete a document
 > db.users.deleteOne({ name: "Alice" })
 ```
+
+> All the commands with "\$" as prefix are executed on Linux Shell but without the "\$" symbole
+
+> All the commands with "\>" as prefix are executed in "Mongo Shell" but without the "\>" symbole.
 
 This demo shows how to create a database, insert, query, update, and delete documents in MongoDB.
