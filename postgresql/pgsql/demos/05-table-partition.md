@@ -6,10 +6,12 @@ This demo shows how to create a partitioned table in PostgreSQL, add partitions,
 
 ```sql
 CREATE TABLE employees (
-    employee_id SERIAL PRIMARY KEY,
+    employee_id SERIAL,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    hire_date DATE
+    hire_date DATE,
+    --- Composite primary key from TWO columns employee_id and hire_date
+    PRIMARY KEY (employee_id, hire_date)
 ) PARTITION BY RANGE (hire_date);
 ```
 
