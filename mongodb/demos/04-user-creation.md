@@ -86,6 +86,37 @@ mongosh "mongodb://localhost:27017/admin" -u superadmin -p super@1234
   db.dropUser("riya")
   ```
 
+## Enabling Authentication in MongoDB
+
+To require users to authenticate, you must enable authentication in the MongoDB configuration.
+
+### 1. Edit the MongoDB Configuration File
+
+Open your MongoDB configuration file (commonly `/etc/mongod.conf`) and add or update the following lines:
+
+```yaml
+security:
+    authorization: "enabled"
+```
+
+### 2. Restart MongoDB
+
+After saving the configuration file, restart the MongoDB server for the changes to take effect.
+
+**Example (Linux):**
+```sh
+sudo systemctl restart mongod
+```
+
+**Example (Windows):**
+```sh
+net stop MongoDB
+net start MongoDB
+```
+
+With authentication enabled, all clients must provide valid credentials to access the database.
+
+
 ## Common Built-in Roles
 
 - `read`: Allows read-only operations.
