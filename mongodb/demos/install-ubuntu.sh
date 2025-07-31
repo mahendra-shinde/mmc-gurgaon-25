@@ -1,3 +1,4 @@
+#!/bin/bash
 # Detect Ubuntu version and codename
 source /etc/os-release
 UBUNTU_VERSION=${VERSION_ID}
