@@ -29,7 +29,7 @@ This guide explains how to install MongoDB 8.0 on Ubuntu and RHEL/CentOS Linux s
 
 6. After installation, check MongoDB status:
    ```sh
-   systemctl status mongod
+   sudo systemctl status mongod
    ```
 7. To connect to MongoDB, use:
    ```sh
@@ -60,7 +60,7 @@ This guide explains how to install MongoDB 8.0 on Ubuntu and RHEL/CentOS Linux s
 
 6. After installation, check MongoDB status:
    ```sh
-   systemctl status mongod
+   sudo systemctl status mongod
    ```
 7. To connect to MongoDB, use:
    ```sh

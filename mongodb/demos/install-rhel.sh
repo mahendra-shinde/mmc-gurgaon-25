@@ -1,3 +1,4 @@
+#!/bin/bash
 # Detect RHEL/CentOS version
 source /etc/os-release
 RHEL_VERSION=${VERSION_ID%%.*}
