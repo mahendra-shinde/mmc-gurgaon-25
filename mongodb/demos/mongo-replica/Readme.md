@@ -31,7 +31,7 @@ chown 999:999 mongo-keyfile  # Ensure docker can access the file
 Download or copy the contents of [`compose.yaml`](./compose.yaml) into your working directory:
 
 ```sh
-wget -O compose.yaml <URL-to-compose.yaml>
+wget -O compose.yaml https://raw.githubusercontent.com/mahendra-shinde/mmc-gurgaon-25/refs/heads/main/mongodb/demos/mongo-replica/compose.yaml
 # Or copy manually from the repository
 ```
 

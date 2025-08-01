@@ -76,11 +76,11 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile", "/data/keyfile"]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile", "--bind_all_ip" ]
     volumes:
       - ./data1:/data/db
+      - ./mongo-config1:/data/configdb
       - ./mongo-keyfile:/data/keyfile:ro
-      - ./init-replica.js:/docker-entrypoint-initdb.d/init-replica.js:ro
 
   mongo2:
     image: mongo:latest
@@ -90,9 +90,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile", "/data/keyfile"]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile", "--bind_all_ip" ]
     volumes:
-      - ./data2:/data/db
+      - ./data1:/data/db
+      - ./mongo-config2:/data/configdb
       - ./mongo-keyfile:/data/keyfile:ro
 
   mongo3:
@@ -103,9 +104,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile", "/data/keyfile"]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile", "--bind_all_ip" ]
     volumes:
-      - ./data3:/data/db
+      - ./data1:/data/db
+      - ./mongo-config3:/data/configdb
       - ./mongo-keyfile:/data/keyfile:ro
 ```
 
