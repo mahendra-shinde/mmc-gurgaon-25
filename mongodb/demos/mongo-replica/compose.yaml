@@ -8,11 +8,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ,"--bind_ip_all"]
     volumes:
       - ./data1:/data/db
       # Replication Initialization script is 'passed' to container in READONLY Mode
-      - ./init-replica.js:/docker-entrypoint-initdb.d/init-replica.js:ro
       - ./mongo-keyfile:/data/keyfile:ro
 
   mongo2:
@@ -23,9 +22,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ,"--bind_ip_all"]
     volumes:
-      - ./data1:/data/db
+      - ./data2:/data/db
       - ./mongo-keyfile:/data/keyfile:ro
 
   mongo3:
@@ -36,7 +35,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ,"--bind_ip_all" ]
     volumes:
-      - ./data1:/data/db
+      - ./data3:/data/db
       - ./mongo-keyfile:/data/keyfile:ro
+  
