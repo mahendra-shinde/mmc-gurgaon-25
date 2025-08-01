@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    volumes:
+      - ./data1:/data/db
+      # Replication Initialization script is 'passed' to container in READONLY Mode
+      - ./init-replica.js:/docker-entrypoint-initdb.d/init-replica.js:ro
+      - ./mongo-keyfile:/data/keyfile:ro
+
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    volumes:
+      - ./data1:/data/db
+      - ./mongo-keyfile:/data/keyfile:ro
+
+  mongo3:
+    image: mongo:latest
+    container_name: mongo3
+    ports:
+      - 27019:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    command: ["mongod", "--replSet", "rs0", "--keyFile","/data/keyfile" ]
+    volumes:
+      - ./data1:/data/db
+      - ./mongo-keyfile:/data/keyfile:ro
