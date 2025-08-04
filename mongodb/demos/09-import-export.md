@@ -47,14 +47,17 @@ quit
 #### Basic Import Command
 
 ```bash
-mongoimport --db shop --type csv --headerline products.csv
+mongoimport --db shop --collection products --type csv --headerline --file products.csv
 ```
 
 **Command Breakdown:**
 - `--db shop`: Target database name
+- `--collection products`: Target collection name (required!)
 - `--type csv`: Specify file type as CSV
 - `--headerline`: Treat first line as field names (headers)
-- `products.csv`: Source CSV file path
+- `--file products.csv`: Source CSV file path
+
+> **Note**: When using `--headerline`, all data will be imported as strings. For proper data types, see Step 5 below.
 
 #### Advanced Import with Additional Options
 
@@ -105,19 +108,48 @@ db.products.findOne()
 
 By default, mongoimport treats all CSV values as strings. To handle proper data types:
 
-**Option 1: Use Field Mapping**
+> **Important Note**: `--headerline` and `--fields` cannot be used together in mongoimport!
+
+**Option 1: Use Field Mapping (WITHOUT --headerline)**
 ```bash
+# First, manually specify field names with types
 mongoimport \
   --db shop \
   --collection products \
   --type csv \
-  --headerline \
   --file products.csv \
   --columnsHaveTypes \
   --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
 ```
 
-**Option 2: Post-Import Data Transformation**
+**Option 2: Two-Step Process**
+```bash
+# Step 1: Import with headerline (strings only)
+mongoimport \
+  --db shop \
+  --collection products \
+  --type csv \
+  --headerline \
+  --file products.csv
+
+# Step 2: Transform data types (see post-import transformation below)
+```
+
+**Option 3: Prepare CSV Without Headers**
+```bash
+# Remove header line from CSV first, then use field mapping
+tail -n +2 products.csv > products_no_header.csv
+
+mongoimport \
+  --db shop \
+  --collection products \
+  --type csv \
+  --file products_no_header.csv \
+  --columnsHaveTypes \
+  --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
+```
+
+**Option 4: Post-Import Data Transformation**
 ```javascript
 // Update data types after import
 db.products.updateMany(
@@ -136,6 +168,50 @@ db.products.updateMany(
   ]
 )
 ```
+
+### Recommended Approach for Beginners
+
+For most use cases, especially when learning, use this **two-step approach**:
+
+1. **Import with --headerline** (simple and reliable):
+```bash
+mongoimport --db shop --collection products --type csv --headerline --file products.csv
+```
+
+2. **Convert data types in MongoDB**:
+```javascript
+// Connect to MongoDB
+mongosh
+
+// Switch to shop database
+use shop
+
+// Convert data types
+db.products.updateMany(
+  {},
+  [
+    {
+      $set: {
+        productId: { $toInt: "$productId" },
+        price: { $toDouble: "$price" },
+        stock: { $toInt: "$stock" },
+        rating: { $toDouble: "$rating" },
+        isActive: { $toBool: "$isActive" },
+        createdDate: { $dateFromString: { dateString: "$createdDate" } }
+      }
+    }
+  ]
+)
+
+// Verify the conversion
+db.products.findOne()
+```
+
+This approach is:
+- ✅ Simple and beginner-friendly
+- ✅ Uses actual CSV headers
+- ✅ Allows data type conversion
+- ✅ Easy to troubleshoot
 
 ### Step 6: Query the Imported Data
 
@@ -233,7 +309,66 @@ mongoimport \
 
 ## Common Issues and Solutions
 
-### Issue 1: File Path Problems
+### Issue 1: Cannot Use --headerline and --fields Together
+
+**Problem**: MongoDB's `mongoimport` doesn't allow using `--headerline` and `--fields` simultaneously.
+
+**Solutions**:
+
+**Solution A: Use --headerline (Recommended for beginners)**
+```bash
+# Simple import with string data types
+mongoimport --db shop --collection products --type csv --headerline --file products.csv
+
+# Then convert data types in MongoDB
+mongosh shop --eval "
+db.products.updateMany(
+  {},
+  [
+    {
+      \$set: {
+        productId: { \$toInt: '\$productId' },
+        price: { \$toDouble: '\$price' },
+        stock: { \$toInt: '\$stock' },
+        rating: { \$toDouble: '\$rating' },
+        isActive: { \$toBool: '\$isActive' },
+        createdDate: { \$dateFromString: { dateString: '\$createdDate' } }
+      }
+    }
+  ]
+)
+"
+```
+
+**Solution B: Use --fields without headers**
+```bash
+# Skip the header line and define fields manually
+mongoimport \
+  --db shop \
+  --collection products \
+  --type csv \
+  --file products.csv \
+  --skip 1 \
+  --columnsHaveTypes \
+  --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
+```
+
+**Solution C: Create a headerless CSV file**
+```bash
+# Windows PowerShell
+Get-Content products.csv | Select-Object -Skip 1 | Out-File products_no_header.csv
+
+# Then import with field mapping
+mongoimport \
+  --db shop \
+  --collection products \
+  --type csv \
+  --file products_no_header.csv \
+  --columnsHaveTypes \
+  --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
+```
+
+### Issue 2: File Path Problems
 ```bash
 # Use absolute path
 mongoimport --db shop --collection products --type csv --headerline --file "C:\data\products.csv"
