@@ -47,7 +47,7 @@ quit
 #### Basic Import Command
 
 ```bash
-mongoimport --db shop --collection products --type csv --headerline --file products.csv
+mongoimport --db shop --collection products --type csv --headerline products.csv
 ```
 
 **Command Breakdown:**
@@ -55,17 +55,14 @@ mongoimport --db shop --collection products --type csv --headerline --file produ
 - `--collection products`: Target collection name (required!)
 - `--type csv`: Specify file type as CSV
 - `--headerline`: Treat first line as field names (headers)
-- `--file products.csv`: Source CSV file path
+- ` products.csv`: Source CSV file path
 
 > **Note**: When using `--headerline`, all data will be imported as strings. For proper data types, see Step 5 below.
 
 #### Advanced Import with Additional Options
 
 ```bash
-mongoimport \
-  --host localhost:27017 \
-  --db shop \
-  --collection products \
+mongoimport --host localhost:27017 --db shop \
   --type csv \
   --headerline \
   --file products.csv \
@@ -121,35 +118,20 @@ mongoimport \
   --columnsHaveTypes \
   --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
 ```
+> In this example above command would fail as It tries to convert Row-0 "productId" to Int32 !!
 
 **Option 2: Two-Step Process**
 ```bash
 # Step 1: Import with headerline (strings only)
 mongoimport \
   --db shop \
-  --collection products \
   --type csv \
   --headerline \
   --file products.csv
-
-# Step 2: Transform data types (see post-import transformation below)
 ```
 
-**Option 3: Prepare CSV Without Headers**
-```bash
-# Remove header line from CSV first, then use field mapping
-tail -n +2 products.csv > products_no_header.csv
+# Step 2: Post-Import Data Transformation
 
-mongoimport \
-  --db shop \
-  --collection products \
-  --type csv \
-  --file products_no_header.csv \
-  --columnsHaveTypes \
-  --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
-```
-
-**Option 4: Post-Import Data Transformation**
 ```javascript
 // Update data types after import
 db.products.updateMany(
@@ -169,6 +151,19 @@ db.products.updateMany(
 )
 ```
 
+**Option 3: Prepare CSV Without Headers**
+
+```bash
+# Remove header line from CSV first, then use field mapping
+tail -n +2 products.csv > products_no_header.csv
+
+mongoimport \
+  --db shop \
+  --type csv \
+  --file products_no_header.csv \
+  --columnsHaveTypes \
+  --fields "productId.int32(),name.string(),category.string(),price.double(),stock.int32(),description.string(),brand.string(),rating.double(),isActive.boolean(),createdDate.date(2006-01-02)"
+```
 ### Recommended Approach for Beginners
 
 For most use cases, especially when learning, use this **two-step approach**:
