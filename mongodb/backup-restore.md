@@ -61,6 +61,107 @@ mongorestore --db contacts /path/to/backup/contacts
   mongorestore /path/to/backup/
   ```
 
+## File System Backup
+
+File system backup is an alternative approach that involves creating snapshots or copies of the MongoDB data files directly at the operating system level. This method is particularly useful for large deployments and can provide faster backup and restore operations.
+
+### Prerequisites
+
+Before performing file system backups, ensure:
+- MongoDB is running with journaling enabled (default in most configurations)
+- You have appropriate file system permissions
+- The storage system supports consistent snapshots (LVM, ZFS, or cloud storage snapshots)
+
+### Methods
+
+#### 1. Hot Backup (MongoDB Running)
+
+For a consistent backup while MongoDB is running:
+
+```sh
+# Step 1: Lock the database to ensure consistency
+mongo --eval "db.fsyncLock()"
+
+# Step 2: Create snapshot or copy data files
+cp -r /var/lib/mongodb /backup/mongodb-$(date +%Y%m%d_%H%M%S)
+# OR use filesystem snapshot
+# It WON'T work in WSL Environment 
+lvcreate -L1G -s -n mongodb-backup /dev/vg0/mongodb-lv
+
+# Step 3: Unlock the database
+mongo --eval "db.fsyncUnlock()"
+```
+
+#### 2. Cold Backup (MongoDB Stopped)
+
+For guaranteed consistency, stop MongoDB first:
+
+```sh
+# Step 1: Stop MongoDB service
+sudo systemctl stop mongod
+
+# Step 2: Copy data files
+cp -r /var/lib/mongodb /backup/mongodb-$(date +%Y%m%d_%H%M%S)
+
+# Step 3: Start MongoDB service
+sudo systemctl start mongod
+```
+
+#### 3. Using LVM Snapshots
+
+> DO NOT TRY THIS ON WSL (Windows)
+
+If using LVM (Logical Volume Manager):
+
+```sh
+# Create snapshot
+sudo lvcreate -L1G -s -n mongodb-snapshot-$(date +%Y%m%d) /dev/vg0/mongodb-lv
+
+# Mount and backup
+sudo mkdir /mnt/mongodb-snapshot
+sudo mount /dev/vg0/mongodb-snapshot-$(date +%Y%m%d) /mnt/mongodb-snapshot
+cp -r /mnt/mongodb-snapshot/* /backup/mongodb-$(date +%Y%m%d_%H%M%S)/
+
+# Cleanup
+sudo umount /mnt/mongodb-snapshot
+sudo lvremove -f /dev/vg0/mongodb-snapshot-$(date +%Y%m%d)
+```
+
+### Restore from File System Backup
+
+To restore from a file system backup:
+
+```sh
+# Step 1: Stop MongoDB
+sudo systemctl stop mongod
+
+# Step 2: Remove current data (backup first if needed)
+sudo mv /var/lib/mongodb /var/lib/mongodb.old
+
+# Step 3: Restore from backup
+sudo cp -r /backup/mongodb-20240804_143000 /var/lib/mongodb
+
+# Step 4: Fix permissions
+sudo chown -R mongod:mongod /var/lib/mongodb
+
+# Step 5: Start MongoDB
+sudo systemctl start mongod
+```
+
+### Advantages and Considerations
+
+**Advantages:**
+- Faster for large datasets
+- Creates point-in-time snapshots
+- Can backup the entire MongoDB instance including configuration
+- Works well with automation scripts
+
+**Considerations:**
+- Requires file system level access
+- May need database locking for hot backups
+- Backup size equals the full data directory
+- Less granular than mongodump (can't easily restore single collections)
+
 ## Notes
 
 - Ensure MongoDB server is running before performing backup or restore.
