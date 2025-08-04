@@ -1,0 +1,9 @@
+productId,name,category,price,stock,description,brand,rating,isActive,createdDate
+1,"Wireless Bluetooth Headphones","Electronics",2499.99,50,"High-quality wireless headphones with noise cancellation and 30-hour battery life","SoundMax",4.5,true,"2024-01-15"
+2,"Organic Green Tea","Food & Beverages",299.50,100,"Premium organic green tea leaves sourced from Darjeeling hills","TeaGarden",4.2,true,"2024-02-10"
+3,"Gaming Mechanical Keyboard","Electronics",4999.00,25,"RGB backlit mechanical keyboard with blue switches for gaming enthusiasts","GameTech",4.8,true,"2024-01-20"
+4,"Cotton Casual T-Shirt","Clothing",599.00,200,"100% cotton comfortable casual t-shirt available in multiple colors","FashionHub",4.0,true,"2024-03-05"
+5,"Stainless Steel Water Bottle","Home & Kitchen",799.99,75,"Insulated stainless steel water bottle keeps drinks hot/cold for 12 hours","HydroLife",4.3,true,"2024-02-28"
+6,"Smartphone Case","Electronics",449.00,150,"Durable silicone smartphone case with shock absorption","TechGuard",3.9,true,"2024-03-12"
+7,"Coffee Beans Premium Blend","Food & Beverages",899.00,80,"Arabica coffee beans with rich aroma and smooth taste","CoffeeMaster",4.6,true,"2024-01-08"
+8,"Yoga Mat","Sports & Fitness",1299.00,60,"Non-slip eco-friendly yoga mat with alignment guides","FitLife",4.4,true,"2024-02-15"
