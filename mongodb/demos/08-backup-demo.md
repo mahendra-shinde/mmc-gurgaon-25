@@ -28,6 +28,7 @@ Ensure the security section is commented out or disabled:
 ```bash
 # Linux/macOS
 sudo systemctl restart mongod
+```
 
 ## Step 3: Connect to MongoDB
 
@@ -37,13 +38,13 @@ mongosh
 
 ## Step 4: Create HR Database and Switch to It
 
-```javascript
+```js
 use hr
 ```
 
 ## Step 5: Create Employees Collection and Insert Sample Data
 
-```javascript
+```js
 // Insert 10 sample employees
 db.employees.insertMany([
   {
@@ -131,7 +132,7 @@ db.employees.insertMany([
 
 ## Step 6: Create Departments Collection and Insert Sample Data
 
-```javascript
+```js
 // Insert 5 departments
 db.departments.insertMany([
   {
@@ -174,7 +175,7 @@ db.departments.insertMany([
 
 ## Step 7: Create Branches Collection and Insert Sample Data
 
-```javascript
+```js
 // Insert 5 branches
 db.branches.insertMany([
   {
@@ -222,7 +223,7 @@ db.branches.insertMany([
 
 ## Step 8: Verify Data Creation
 
-```javascript
+```js
 // Check collections in hr database
 show collections
 
