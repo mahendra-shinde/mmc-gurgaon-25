@@ -80,16 +80,16 @@ For a consistent backup while MongoDB is running:
 
 ```sh
 # Step 1: Lock the database to ensure consistency
-mongo --eval "db.fsyncLock()"
+mongosh --eval "db.fsyncLock()"
 
 # Step 2: Create snapshot or copy data files
 cp -r /var/lib/mongodb /backup/mongodb-$(date +%Y%m%d_%H%M%S)
 # OR use filesystem snapshot
 # It WON'T work in WSL Environment 
-lvcreate -L1G -s -n mongodb-backup /dev/vg0/mongodb-lv
+# lvcreate -L1G -s -n mongodb-backup /dev/vg0/mongodb-lv
 
 # Step 3: Unlock the database
-mongo --eval "db.fsyncUnlock()"
+mongosh --eval "db.fsyncUnlock()"
 ```
 
 #### 2. Cold Backup (MongoDB Stopped)
