@@ -57,12 +57,17 @@ mv apache-tomcat-9.0.108 apache-tomcat-9.0
 cd apache-tomcat-9.0
 ```
 
-Set the CATALINA_HOME environment variable:
+Set the `JAVA_HOME` and `CATALINA_HOME` environment variables:
 
 ```bash
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> ~/.bashrc
 export CATALINA_HOME=$PWD
 echo "export CATALINA_HOME=$PWD" >> ~/.bashrc
 ```
+
+> **Note:** The `.bashrc` file is crucial for setting up environment variables and customizing your shell environment. Changes made here, such as adding `JAVA_HOME` and `CATALINA_HOME`, ensure these variables are automatically set each time you open a new terminal session. This helps avoid manual configuration and potential errors when running Tomcat commands.
+
 
 ## Step 5: Configure Tomcat Permissions
 
