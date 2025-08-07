@@ -168,7 +168,7 @@ Navigate to the parent directory of your `mywebsite` folder and create a WAR fil
 **On Linux/macOS:**
 ```bash
 cd ~
-tar -cvf mywebsite.war -C mywebsite .
+jar -cvf mywebsite.war -C mywebsite .
 ```
 
 **Command Explanation:**
