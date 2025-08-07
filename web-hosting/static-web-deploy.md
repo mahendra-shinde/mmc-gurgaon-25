@@ -33,13 +33,19 @@ mywebsite/
  ├── style.css           # The main CSS stylesheet (Optional)
  ├── about.html          # About page
  ├── contact.html        # Contact page
- ├── images/             # Directory for images
- │   ├── logo.png
- │   └── banner.jpg
- ├── js/                 # Directory for JavaScript files
- │   └── script.js
  └── WEB-INF/
      └── web.xml         # Web application deployment descriptor
+```
+
+```bash
+
+```sh
+cd ~
+mkdir mywebsite
+cd mywebsite
+touch index.html about.html contact.html
+mkdir WEB-INF
+touch WEB-INF/web.xml
 ```
 
 **Explanation of Structure:**
@@ -49,6 +55,8 @@ mywebsite/
 - **web.xml**: Deployment descriptor (required for Java web applications)
 
 ### Step 2: Create the Basic HTML Files
+
+> nano index.html
 
 Create a simple `index.html` file:
 
@@ -159,7 +167,7 @@ Navigate to the parent directory of your `mywebsite` folder and create a WAR fil
 
 **On Linux/macOS:**
 ```bash
-cd /path/to/parent/directory
+cd ~
 tar -cvf mywebsite.war -C mywebsite .
 ```
 
@@ -185,7 +193,6 @@ tar -cvf mywebsite.war -C mywebsite .
 3. **Set proper permissions (Linux only):**
    ```bash
    chmod 644 $CATALINA_HOME/webapps/mywebsite.war
-   chown tomcat:tomcat $CATALINA_HOME/webapps/mywebsite.war
    ```
 
 #### Method 2: Use Tomcat Manager (Web Interface)
