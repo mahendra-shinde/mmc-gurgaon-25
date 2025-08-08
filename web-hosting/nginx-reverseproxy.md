@@ -103,8 +103,6 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    server_name _;
-
     # Logging
     access_log /var/log/nginx/tomcat_access.log;
     error_log /var/log/nginx/tomcat_error.log;
